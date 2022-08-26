@@ -13,17 +13,17 @@
 
 static bool getLed(void)
 {
-	return 0;
+	return !HAL_GPIO_ReadPin(LD2_GPIO_Port, LD2_Pin);
 }
 
 static void setLed(bool est)
 {
-
+	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, !est);
 }
 
 static void toggleLed(void)
 {
-
+	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 }
 
 enum {
@@ -37,7 +37,7 @@ int32_t ssi_handler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
     switch (iIndex) {
         case SSI_UPTIME:
             snprintf(pcInsert, iInsertLen, "%d",
-                    xTaskGetTickCount() * portTICK_PERIOD_MS / 1000);
+                    (int)(xTaskGetTickCount() * portTICK_PERIOD_MS / 1000));
             break;
         case SSI_FREE_HEAP:
             snprintf(pcInsert, iInsertLen, "%d", (int) xPortGetFreeHeapSize());
@@ -87,7 +87,7 @@ void websocket_task(void *pvParameter)
 
     for (;;) {
         if (pcb == NULL || pcb->state != ESTABLISHED) {
-            printf("Connection closed, deleting task\n");
+            //printf("Connection closed, deleting task\n");
             break;
         }
 
@@ -118,7 +118,7 @@ void websocket_task(void *pvParameter)
  */
 void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mode)
 {
-    printf("[websocket_callback]:\n%.*s\n", (int) data_len, (char*) data);
+//    printf("[websocket_callback]:\n%.*s\n", (int) data_len, (char*) data);
 
     uint8_t response[2];
     uint16_t val;
@@ -126,7 +126,7 @@ void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mo
     switch (data[0]) {
         case 'A': // ADC
             /* This should be done on a separate thread in 'real' applications */
-            val = 123;
+            val = xTaskGetTickCount() % 1024 ;
             break;
         case 'D': // Disable LED
         	setLed(true);
@@ -137,7 +137,7 @@ void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mo
             val = 0xBEEF;
             break;
         default:
-            printf("Unknown command\n");
+  //          printf("Unknown command\n");
             val = 0;
             break;
     }
@@ -154,22 +154,22 @@ void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mo
  */
 void websocket_open_cb(struct tcp_pcb *pcb, const char *uri)
 {
-    printf("WS URI: %s\n", uri);
+//    printf("WS URI: %s\n", uri);
     if (!strcmp(uri, "/stream")) {
-        printf("request for streaming\n");
+  //      printf("request for streaming\n");
         xTaskCreate(&websocket_task, "websocket_task", 256, (void *) pcb, 2, NULL);
     }
 }
 
 void httpd_task(void *pvParameters)
 {
-    tCGI pCGIs[] = {
+    static const tCGI pCGIs[] = {
         {"/gpio", (tCGIHandler) gpio_cgi_handler},
         {"/about", (tCGIHandler) about_cgi_handler},
         {"/websockets", (tCGIHandler) websocket_cgi_handler},
     };
 
-    const char *pcConfigSSITags[] = {
+    static const char *pcConfigSSITags[] = {
         "uptime", // SSI_UPTIME
         "heap",   // SSI_FREE_HEAP
         "led"     // SSI_LED_STATE
@@ -182,6 +182,8 @@ void httpd_task(void *pvParameters)
     websocket_register_callbacks((tWsOpenHandler) websocket_open_cb,
             (tWsHandler) websocket_cb);
     httpd_init();
+
+    vTaskDelete(NULL);
 
     for (;;);
 }
