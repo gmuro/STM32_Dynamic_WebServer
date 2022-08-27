@@ -58,13 +58,13 @@ const char *gpio_cgi_handler(int iIndex, int iNumParams, char *pcParam[], char *
 {
     for (int i = 0; i < iNumParams; i++) {
         if (strcmp(pcParam[i], "on") == 0) {
-            uint8_t gpio_num = atoi(pcValue[i]);
+            //uint8_t gpio_num = atoi(pcValue[i]);
             setLed(true);
         } else if (strcmp(pcParam[i], "off") == 0) {
-            uint8_t gpio_num = atoi(pcValue[i]);
+            //uint8_t gpio_num = atoi(pcValue[i]);
             setLed(false);
         } else if (strcmp(pcParam[i], "toggle") == 0) {
-            uint8_t gpio_num = atoi(pcValue[i]);
+            //uint8_t gpio_num = atoi(pcValue[i]);
             toggleLed();
         }
     }
@@ -188,7 +188,7 @@ void httpd_task(void *pvParameters)
     for (;;);
 }
 
-void user_init(void)
+void http_server_init(void)
 {
     /* initialize tasks */
     xTaskCreate(&httpd_task, "HTTP Daemon", 128, NULL, 2, NULL);
