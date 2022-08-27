@@ -20,6 +20,9 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "mbedtls.h"
+#include "httpd.h"
+#include "http_server.h"
+#include "lwip.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -360,7 +363,7 @@ void StartDefaultTask(void *argument)
 
   httpd_init();
 
-  user_init();
+  http_server_init();
 
   for(;;)
   {
