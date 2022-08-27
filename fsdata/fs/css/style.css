@@ -25,6 +25,81 @@ ul.navbar li a.active {
 	ul.navbar li.right, 
 	ul.navbar li {float: none;}
 }
+
+body {
+	margin: 0;
+	font-family: sans-serif;
+}
+
+header {
+	width: 100%;
+	background: #333;
+	padding-bottom: 20px;
+	padding-top: 20px;
+}
+
+#btn-menu 
+{
+	display: none;
+}
+
+header label {
+	display: block;
+	width: 30px;
+	height: 30px;
+	padding: 10px;
+	border-right: 1px solid #333;
+}
+
+header label:hover {
+	cursor: pointer;
+	background: rgba(0,0,0,0.3);
+}
+
+.menu ul {
+	margin: 0;
+	list-style-type: none;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.menu li {
+
+	border-top: 1px solid #fff;
+
+}
+.menu li:hover {
+	border-right: 1px solid #fff;  
+	background: rgba(0,0,0,0.3);
+}
+.menu li a {
+	display: block;
+	font-size: 20px;
+	padding: 15px 20px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.menu {
+	position: absolute;
+	background: #4E94AB;
+	width: 50%;
+	margin-left: -50%;
+	transition:all 0.5s
+
+}
+
+#btn-menu:checked ~ .menu {
+	margin: 0;
+
+
+}
+
+
+
+
+
 .onoffswitch {
 	position: relative; width: 90px;
 	-webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;

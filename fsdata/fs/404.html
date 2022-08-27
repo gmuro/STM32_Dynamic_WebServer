@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimu-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/siimple.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="shortcut icon" href="img/favicon.png">
+		<!-- <link rel="shortcut icon" href="img/favicon.png"> -->
 		<title>HTTP Server</title>
 	</head>
 	<body>
-		<ul class="navbar">
-			<li><a href="/">Home</a></li>
-			<li><a href="websockets">WebSockets</a></li>
-			<li><a href="about">About</a></li>
-		</ul>
+		<header>
+			<input type="checkbox" id="btn-menu">
+			<label for="btn-menu"><img src="img/multipleline_114207.png" alt="">
+</label>
+			<nav class="menu">
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="websockets.html">WebSockets</a></li>
+					<li><a href="about">About</a></li>
+				</ul>
+			</nav>
 
+		</header>
 		<div class="grid main">
 			<h1>404 - Page not found</h1>
 			<div class="alert alert-error">Sorry, the page you are requesting was not found on this server.</div>
