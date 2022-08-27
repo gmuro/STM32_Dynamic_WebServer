@@ -1,110 +1,10 @@
-ul.navbar {
-	list-style-type: none;
-	margin-bottom: 32px;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-ul.navbar li {
-	float: left;
-}
-ul.navbar li a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-ul.navbar li a:hover:not(.active) {
-	background-color: #111;
-}
-ul.navbar li a.active {
-	background-color: #09a0f6;
-}
-@media screen and (max-width: 600px){
-	ul.navbar li.right, 
-	ul.navbar li {float: none;}
-}
-
-/* body {
-	margin: 0;
-	font-family: sans-serif;
-}
-
-header {
-	width: 100%;
-	background: #333;
-	padding-bottom: 20px;
-	padding-top: 20px;
-} */
-
-/* #btn-menu 
-{
-	display: block;
-
-}
-
-header label {
-	display: block;
-	width: 30px;
-	height: 30px;
-	padding: 10px;
-	border-right: 1px solid #333;
-}
-
-header label:hover {
-	cursor: pointer;
-	background: rgba(0,0,0,0.3);
-
-}
-
-.menu ul {
-	margin: 0px;
-	list-style-type: none;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-}
-
-.menu li {
-
-	border-top: 1px solid #fff;
-
-}
-.menu li:hover {
-	border-right: 1px solid #fff;  
-	background: rgba(0,0,0,0.3);
-}
-.menu li a {
-	display: block;
-	font-size: 20px;
-	padding: 15px 20px;
-	color: #fff;
-	text-decoration: none;
-}
-
-.menu {
-	position: absolute;
-	margin-top: 20px;
-	background: #4E94AB;
-	width: 50%;
-	margin-left: -50%;
-	transition:all 0.5s;
-
-}
-
-#btn-menu:checked ~ .menu {
-	margin: 0;
-	margin-top: 20px;
-
-} */
-/* body {
+ body {
 	text-align:center;
 	margin:0;
 	background:#f0f8ea;
 	font-family:'Roboto';
-	/* background-color:#E1D384; 
-} */
+	/* background-color:#E1D384; */
+}
 
 header {
 	background:#333;
@@ -112,7 +12,7 @@ header {
 	padding:3px 0;
 	position:relative;
 	z-index:100;
-	height:80px
+	height:70px
 }
 
 header::after {
@@ -124,6 +24,7 @@ header::after {
 .container {
 	width:98%;
 	margin:0 auto;
+	size: 10px;
 }
 
 .logo {
@@ -132,7 +33,7 @@ header::after {
 	text-anchor:10px;
 	color:white;
 	text-shadow: 5px 5px 5px black;
-	padding-top:5px
+
 }
 
 .site-nav {
@@ -145,7 +46,8 @@ header::after {
 	transition:clip-path ease-in-out 700ms;
 	cursor:pointer;
 	font-size:18px;
-	width: 40%;
+	width: 30%;
+	
 }
 
 .site-nav ul {
@@ -157,24 +59,30 @@ header::after {
 	clip-path:circle(150% at top right)
 }
 .site-nav li {
-	border-bottom:2px solid #fff
+	border-bottom:2px solid #fff;
+	
 }
 
 .site-nav a {
 	color:#fff;
 	display:block;
 	font-size: 25px;
-	padding:50px;
+	padding:35px;
 	text-decoration:none}
+
 
 .site-nav a:hover,.site-nav a:focus {
 	background:#1688b6;
 	color:#fbfdfd
 }
 
+.active {
+	background:#1688b6;
+}
+
 /*Icono de hamburguesa*/
 .menu-toggle {
-	padding:1em;
+	padding:0.7em;
 	position:absolute;
 	margin:18px;
 	font-size: 23px;
