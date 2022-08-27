@@ -128,7 +128,7 @@ header::after {
 
 .logo {
 	float:left;
-	margin:0;
+	margin:10px;
 	text-anchor:10px;
 	color:white;
 	text-shadow: 5px 5px 5px black;
@@ -145,7 +145,7 @@ header::after {
 	transition:clip-path ease-in-out 700ms;
 	cursor:pointer;
 	font-size:18px;
-	width: 50%;
+	width: 40%;
 }
 
 .site-nav ul {
@@ -199,10 +199,6 @@ header::after {
 .hamburger::before { transform:translateY(-6px) }
 .hamburger::after { transform:translateY(3px) }
 
-
-/* @media(min-width:1290px){header{background:#333;color:#fff;padding:3px 0;position:relative;height:70px;width:all;z-index:100}.menu-toggle{display:none}.site-nav{height:auto;position:absolute;top:40px;background:transparent;float:right;margin-right:10px;clip-path:initial}.site-nav li{display:inline-block;border:none}.site-nav a{color:#fff;padding:8px;margin-left:3em}.site-nav--icon{display:none}.site-nav a:hover,.site-nav a:focus{background:transparent;color:#E1D384}.blog img{width:80%;height:40%;margin-top:7px}.Bienvenido{margin-top:5px}} */
-/* @media (min-width:900px){.bot{margin-left:0}.tab-rtos-container table.tab{width:98%;background-color:#315D63;text-align:left;border-collapse:collapse;font-size:90%}.tab th{padding:25px;font-size:20px}.tab td{padding:25px;font-size:20px}} */
-/* h1{text-decoration:blink;font-size:30px;text-shadow:2px 2px 2px black} */
 
 .onoffswitch {
 	position: relative; width: 90px;
