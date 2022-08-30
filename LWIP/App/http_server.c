@@ -25,22 +25,38 @@ static const infoLeds_t infoLeds[] =
 	{
 		LD2_GPIO_Port, LD2_Pin
 	},
+	{
+		LD3_GPIO_Port, LD3_Pin
+	},
 };
 
+#define TOTAL_LEDS	(sizeof(infoLeds) / sizeof(infoLeds[0]))
 
-static bool getLed(void)
+typedef enum
 {
-	return !HAL_GPIO_ReadPin(LD2_GPIO_Port, LD2_Pin);
+	ID_LED_1 = 0,
+	ID_LED_2,
+	ID_LED_3,
+}idLed_t;
+
+static bool getLed(uint8_t idLed)
+{
+	bool ret = false;
+
+	if (idLed < TOTAL_LEDS)
+		ret = !HAL_GPIO_ReadPin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
+
+	return ret;
 }
 
-static void setLed(bool est)
+static void setLed(uint8_t idLed, bool est)
 {
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, !est);
+	HAL_GPIO_WritePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin, !est);
 }
 
-static void toggleLed(void)
+static void toggleLed(uint8_t idLed)
 {
-	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	HAL_GPIO_TogglePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
 }
 
 enum {
@@ -60,7 +76,7 @@ int32_t ssi_handler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
             snprintf(pcInsert, iInsertLen, "%d", (int) xPortGetFreeHeapSize());
             break;
         case SSI_LED_STATE:
-            snprintf(pcInsert, iInsertLen, getLed() ? "Off" : "On");
+            snprintf(pcInsert, iInsertLen, getLed(ID_LED_2) ? "Off" : "On");
             break;
         default:
             snprintf(pcInsert, iInsertLen, "N/A");
@@ -75,14 +91,14 @@ const char *gpio_cgi_handler(int iIndex, int iNumParams, char *pcParam[], char *
 {
     for (int i = 0; i < iNumParams; i++) {
         if (strcmp(pcParam[i], "on") == 0) {
-            //uint8_t gpio_num = atoi(pcValue[i]);
-            setLed(true);
+            uint8_t gpio_num = atoi(pcValue[i]);
+            setLed(gpio_num - 1, true);
         } else if (strcmp(pcParam[i], "off") == 0) {
-            //uint8_t gpio_num = atoi(pcValue[i]);
-            setLed(false);
+            uint8_t gpio_num = atoi(pcValue[i]);
+            setLed(gpio_num - 1, false);
         } else if (strcmp(pcParam[i], "toggle") == 0) {
-            //uint8_t gpio_num = atoi(pcValue[i]);
-            toggleLed();
+            uint8_t gpio_num = atoi(pcValue[i]);
+            toggleLed(gpio_num - 1);
         }
     }
     return "/index.ssi";
@@ -110,7 +126,7 @@ void websocket_task(void *pvParameter)
 
         int uptime = xTaskGetTickCount() * portTICK_PERIOD_MS / 1000;
         int heap = (int) xPortGetFreeHeapSize();
-        int led = !getLed();
+        int led = !getLed(ID_LED_2);
 
         /* Generate response in JSON format */
         char response[64];
@@ -146,11 +162,11 @@ void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mo
             val = xTaskGetTickCount() % 1024 ;
             break;
         case 'D': // Disable LED
-        	setLed(true);
+        	setLed(ID_LED_2, true);
             val = 0xDEAD;
             break;
         case 'E': // Enable LED
-        	setLed(false);
+        	setLed(ID_LED_2, false);
             val = 0xBEEF;
             break;
         default:
