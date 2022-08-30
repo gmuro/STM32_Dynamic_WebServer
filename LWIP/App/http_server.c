@@ -11,6 +11,23 @@
 #include "stdbool.h"
 #include "tcp.h"
 
+typedef struct
+{
+	GPIO_TypeDef* GPIOx;
+	uint16_t GPIO_Pin;
+}infoLeds_t;
+
+static const infoLeds_t infoLeds[] =
+{
+	{
+		LD1_GPIO_Port, LD1_Pin
+	},
+	{
+		LD2_GPIO_Port, LD2_Pin
+	},
+};
+
+
 static bool getLed(void)
 {
 	return !HAL_GPIO_ReadPin(LD2_GPIO_Port, LD2_Pin);
