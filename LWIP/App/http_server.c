@@ -48,14 +48,14 @@ static bool getLed(uint8_t idLed)
     bool ret = false;
 
     if (idLed < TOTAL_LEDS)
-        ret = !HAL_GPIO_ReadPin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
+        ret = HAL_GPIO_ReadPin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
 
     return ret;
 }
 
 static void setLed(uint8_t idLed, bool est)
 {
-    HAL_GPIO_WritePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin, !est);
+    HAL_GPIO_WritePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin, est);
 }
 
 static void toggleLed(uint8_t idLed)
@@ -81,7 +81,7 @@ int32_t ssi_handler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
             snprintf(pcInsert, iInsertLen, "%d", (int) xPortGetFreeHeapSize());
             break;
         case SSI_LED_STATE:
-            snprintf(pcInsert, iInsertLen, getLed(ID_LED_2) ? "Off" : "On");
+            snprintf(pcInsert, iInsertLen, getLed(ID_LED_2) ? "On" : "Off");
             break;
         case SSI_STR_TEXT:
             strncpy(pcInsert, strText, iInsertLen);
@@ -136,7 +136,7 @@ void websocket_task(void *pvParameter)
 
         int uptime = xTaskGetTickCount() * portTICK_PERIOD_MS / 1000;
         int heap = (int) xPortGetFreeHeapSize();
-        int led = !getLed(ID_LED_2);
+        int led = getLed(ID_LED_2);
 
         /* Generate response in JSON format */
         char response[64];
@@ -172,11 +172,11 @@ void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mo
             val = xTaskGetTickCount() % 1024 ;
             break;
         case 'D': // Disable LED
-            setLed(ID_LED_2, true);
+            setLed(ID_LED_2, false);
             val = 0xDEAD;
             break;
         case 'E': // Enable LED
-            setLed(ID_LED_2, false);
+            setLed(ID_LED_2, true);
             val = 0xBEEF;
             break;
         default:
