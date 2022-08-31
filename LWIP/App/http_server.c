@@ -39,6 +39,10 @@ typedef enum
 	ID_LED_3,
 }idLed_t;
 
+#define TEXT_LENGTH		16
+
+static char strText[TEXT_LENGTH];
+
 static bool getLed(uint8_t idLed)
 {
 	bool ret = false;
@@ -99,7 +103,9 @@ const char *gpio_cgi_handler(int iIndex, int iNumParams, char *pcParam[], char *
         } else if (strcmp(pcParam[i], "toggle") == 0) {
             uint8_t gpio_num = atoi(pcValue[i]);
             toggleLed(gpio_num - 1);
-        }
+		} else if (strcmp(pcParam[i], "button") == 0) {
+			strncpy(strText, pcValue[i], sizeof(strText));
+		}
     }
     return "/index.ssi";
 }
