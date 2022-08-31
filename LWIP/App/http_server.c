@@ -66,7 +66,8 @@ static void toggleLed(uint8_t idLed)
 enum {
     SSI_UPTIME,
     SSI_FREE_HEAP,
-    SSI_LED_STATE
+    SSI_LED_STATE,
+    SSI_STR_TEXT,
 };
 
 int32_t ssi_handler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
@@ -81,6 +82,9 @@ int32_t ssi_handler(int32_t iIndex, char *pcInsert, int32_t iInsertLen)
             break;
         case SSI_LED_STATE:
             snprintf(pcInsert, iInsertLen, getLed(ID_LED_2) ? "Off" : "On");
+            break;
+        case SSI_STR_TEXT:
+            strncpy(pcInsert, strText, iInsertLen);
             break;
         default:
             snprintf(pcInsert, iInsertLen, "N/A");
@@ -211,7 +215,8 @@ void httpd_task(void *pvParameters)
     static const char *pcConfigSSITags[] = {
         "uptime", // SSI_UPTIME
         "heap",   // SSI_FREE_HEAP
-        "led"     // SSI_LED_STATE
+        "led",    // SSI_LED_STATE
+        "strText",// SSI_STR_TEXT
     };
 
     /* register handlers and start the server */
