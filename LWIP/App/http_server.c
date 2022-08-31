@@ -13,54 +13,54 @@
 
 typedef struct
 {
-	GPIO_TypeDef* GPIOx;
-	uint16_t GPIO_Pin;
+    GPIO_TypeDef* GPIOx;
+    uint16_t GPIO_Pin;
 }infoLeds_t;
 
 static const infoLeds_t infoLeds[] =
 {
-	{
-		LD1_GPIO_Port, LD1_Pin
-	},
-	{
-		LD2_GPIO_Port, LD2_Pin
-	},
-	{
-		LD3_GPIO_Port, LD3_Pin
-	},
+    {
+        LD1_GPIO_Port, LD1_Pin
+    },
+    {
+        LD2_GPIO_Port, LD2_Pin
+    },
+    {
+        LD3_GPIO_Port, LD3_Pin
+    },
 };
 
-#define TOTAL_LEDS	(sizeof(infoLeds) / sizeof(infoLeds[0]))
+#define TOTAL_LEDS    (sizeof(infoLeds) / sizeof(infoLeds[0]))
 
 typedef enum
 {
-	ID_LED_1 = 0,
-	ID_LED_2,
-	ID_LED_3,
+    ID_LED_1 = 0,
+    ID_LED_2,
+    ID_LED_3,
 }idLed_t;
 
-#define TEXT_LENGTH		16
+#define TEXT_LENGTH        16
 
 static char strText[TEXT_LENGTH];
 
 static bool getLed(uint8_t idLed)
 {
-	bool ret = false;
+    bool ret = false;
 
-	if (idLed < TOTAL_LEDS)
-		ret = !HAL_GPIO_ReadPin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
+    if (idLed < TOTAL_LEDS)
+        ret = !HAL_GPIO_ReadPin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
 
-	return ret;
+    return ret;
 }
 
 static void setLed(uint8_t idLed, bool est)
 {
-	HAL_GPIO_WritePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin, !est);
+    HAL_GPIO_WritePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin, !est);
 }
 
 static void toggleLed(uint8_t idLed)
 {
-	HAL_GPIO_TogglePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
+    HAL_GPIO_TogglePin(infoLeds[idLed].GPIOx, infoLeds[idLed].GPIO_Pin);
 }
 
 enum {
@@ -103,9 +103,9 @@ const char *gpio_cgi_handler(int iIndex, int iNumParams, char *pcParam[], char *
         } else if (strcmp(pcParam[i], "toggle") == 0) {
             uint8_t gpio_num = atoi(pcValue[i]);
             toggleLed(gpio_num - 1);
-		} else if (strcmp(pcParam[i], "button") == 0) {
-			strncpy(strText, pcValue[i], sizeof(strText));
-		}
+        } else if (strcmp(pcParam[i], "button") == 0) {
+            strncpy(strText, pcValue[i], sizeof(strText));
+        }
     }
     return "/index.ssi";
 }
@@ -168,11 +168,11 @@ void websocket_cb(struct tcp_pcb *pcb, uint8_t *data, u16_t data_len, uint8_t mo
             val = xTaskGetTickCount() % 1024 ;
             break;
         case 'D': // Disable LED
-        	setLed(ID_LED_2, true);
+            setLed(ID_LED_2, true);
             val = 0xDEAD;
             break;
         case 'E': // Enable LED
-        	setLed(ID_LED_2, false);
+            setLed(ID_LED_2, false);
             val = 0xBEEF;
             break;
         default:
