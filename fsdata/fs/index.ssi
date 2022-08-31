@@ -61,7 +61,7 @@
 			</table>
 			<h1>Send to micro</h1>
 			<section class="form-register">
-				<h4>Sent to micro</h4>
+				<h4>Send to micro</h4>
 				<input class="controls" type="text" id="text" placeholder="write what you want to send" >
 				<input class="botons" type="submit" value="Send" onclick="sendTo();">
 			  </section>
