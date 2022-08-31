@@ -27,7 +27,7 @@
 		</header>
 
 		<div class="grid main">
-			<h1>ESP8266 HTTP Server</h1>
+			<h1>HTTP Server</h1>
 
 			<div class="alert alert-done">HTTP Server is up and running.</div>
 
