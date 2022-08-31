@@ -82,8 +82,6 @@
 
 				var txtBox = document.getElementById('text');
 				txtBox.value = "<!--#strText-->".split(/-->/).pop().trim();
-				
-				// var txtBox = document.getElementById('text').innerHTML;
 			};
 			function gpio() {
 				if (document.getElementById('led-switch').checked)
