@@ -80,6 +80,9 @@
 				ls = ls.split(/-->/).pop().trim();
 				document.getElementById('led-switch').checked = (ls == 'On');
 
+				var txtBox = document.getElementById('text');
+				txtBox.value = "<!--#strText-->".split(/-->/).pop().trim();
+				
 				// var txtBox = document.getElementById('text').innerHTML;
 			};
 			function gpio() {
