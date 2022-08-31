@@ -71,6 +71,7 @@
 		<script>
 			var ws;
 			var retries;
+			var loadded = 0;
 			var series = new TimeSeries();
 			window.onload = function() {
 				wsOpen();
@@ -123,6 +124,10 @@
 					document.getElementById('uptime').innerHTML = stats.uptime + ' seconds';
 					document.getElementById('heap').innerHTML = stats.heap + ' bytes';
 					document.getElementById('led').innerHTML = (stats.led == 1) ? 'On' : 'Off';
+					if (loadded == 0){
+						loadded = 1;
+						document.getElementById('led-switch').checked = (stats.led == 1);
+					}
 				};
 			}
 			function wsWrite(data) {

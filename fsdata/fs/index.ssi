@@ -5,18 +5,29 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<link rel="stylesheet" type="text/css" href="css/siimple.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script src="js/smoothie_min.js"></script>
 		<link rel="shortcut icon" href="img/favicon.png">
 		<title>HTTP Server</title>
 	</head>
 	<body>
-		<ul class="navbar">
-			<li><a class="active" href="/">Home</a></li>
-			<li><a href="websockets">WebSockets</a></li>
-			<li><a href="about">About</a></li>
-		</ul>
+		<header>
+			<div class="container">
+				<h1 class="logo">Dinamic Web Server</h1>
+				</div>
+					<nav id="site-nav" class="site-nav">
+						<ul>
+							<li><a class="active" href="/">Home</a></li>
+							<li><a href="websockets.html">WebSockets</a></li>
+							<li><a href="about.html">About</a></li>
+						</ul>
+					</nav>
+					<div id="menu-toggle" class="menu-toggle" onclick=myFunction()>
+						<div class="hamburger"></div>
+					</div>
+		</header>
 
 		<div class="grid main">
-			<h1>ESP8266 HTTP Server</h1>
+			<h1>HTTP Server</h1>
 
 			<div class="alert alert-done">HTTP Server is up and running.</div>
 
@@ -48,7 +59,12 @@
 					<td id="ledState"><!--#led--></td>
 				</tr>
 			</table>
-
+			<h1>Send to micro</h1>
+			<section class="form-register">
+				<h4>Send to micro</h4>
+				<input class="controls" type="text" id="text" placeholder="write what you want to send" >
+				<input class="botons" type="submit" value="Send" onclick="sendTo();">
+			  </section>
 			<h1>How it works</h1>
 			<p> Each time the server detects a tag of the form <code>&lt;!--#name--&gt;</code> in a .shtml, .ssi or .shtm file
 				where <code>name</code> appears as one of the tags supplied to <code>http_set_ssi_handler</code> in the <code>pcConfigSSITags</code> array,
@@ -63,12 +79,19 @@
 				var ls = document.getElementById('ledState').innerHTML;
 				ls = ls.split(/-->/).pop().trim();
 				document.getElementById('led-switch').checked = (ls == 'On');
+
+				var txtBox = document.getElementById('text');
+				txtBox.value = "<!--#strText-->".split(/-->/).pop().trim();
 			};
 			function gpio() {
 				if (document.getElementById('led-switch').checked)
-					window.location.href = 'gpio?off=2';
-				else
 					window.location.href = 'gpio?on=2';
+				else
+					window.location.href = 'gpio?off=2';
+			};
+			function sendTo() {
+				var txtBox = document.getElementById("text");
+				window.location.href = 'gpio?button=' + txtBox.value;
 			};
 		</script>
 	</body>
