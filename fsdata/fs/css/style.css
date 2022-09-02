@@ -1,9 +1,7 @@
  body {
 	text-align:center;
 	margin:0;
-	background:#f0f8ea;
 	font-family:'Roboto';
-	/* background-color:#E1D384; */
 }
 
 header {
@@ -193,3 +191,4 @@ header::after {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
 	right: 0px; 
 }
+
